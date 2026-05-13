@@ -10,13 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --emerald: #2D6A4F;
-            --emerald-light: #40916C;
-            --emerald-dark: #1B4332;
-            --sand: #F5F0E8;
-            --sand-light: #FAF8F4;
+            --mint: #5BBEB7;
+            --mint-light: #7DD4CE;
+            --mint-dark: #2A9D93;
+            --mint-darker: #1A3D3A;
+            --mint-glow: #5CE0D2;
+            --sand: #F5F1EB;
+            --sand-light: #FAF8F5;
             --cream: #FFFDF7;
-            --sea-mist: #E8F0ED;
+            --sea-mist: #E4F2F0;
             --slate: #2C3E50;
             --slate-light: #5A6C7D;
             --gold: #C8A96E;
@@ -26,7 +28,7 @@
             --text-light: #6B7280;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 
         html { scroll-behavior: smooth; }
 
@@ -37,7 +39,29 @@
             overflow-x: hidden;
         }
 
-        .serif { font-family: 'Playfair Display', serif; }
+        /* CUSTOM CURSOR */
+        .cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--mint-glow);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.hover {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0.6;
+            border-radius: 2px;
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .cursor { display: none; }
+            * { cursor: auto; }
+        }
 
         /* NAV */
         nav {
@@ -46,30 +70,30 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+            transition: background 0.5s, padding 0.5s, box-shadow 0.5s;
         }
 
         nav.scrolled {
             background: rgba(255, 255, 255, 0.97);
-            padding: 0.7rem 2rem;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 0.7rem 2.5rem;
+            box-shadow: 0 2px 30px rgba(0,0,0,0.06);
         }
 
         .nav-brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 6px;
             color: var(--white);
             text-decoration: none;
-            transition: color 0.4s;
+            transition: color 0.5s;
         }
 
-        nav.scrolled .nav-brand { color: var(--emerald-dark); }
+        nav.scrolled .nav-brand { color: var(--mint-darker); }
 
         .nav-links {
             display: flex;
@@ -79,54 +103,54 @@
         }
 
         .nav-links a {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: color 0.3s;
         }
 
-        .nav-links a:hover { color: var(--gold-light); }
+        .nav-links a:hover { color: var(--mint-glow); }
         nav.scrolled .nav-links a { color: var(--slate); }
-        nav.scrolled .nav-links a:hover { color: var(--emerald); }
+        nav.scrolled .nav-links a:hover { color: var(--mint); }
 
         .lang-toggle {
             display: flex;
             gap: 0;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.35);
             border-radius: 20px;
             overflow: hidden;
         }
 
-        nav.scrolled .lang-toggle { border-color: var(--emerald-light); }
+        nav.scrolled .lang-toggle { border-color: var(--mint); }
 
         .lang-btn {
             padding: 0.3rem 0.75rem;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             letter-spacing: 1px;
             background: transparent;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.6);
             border: none;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s;
         }
 
         .lang-btn.active {
-            background: var(--emerald);
+            background: var(--mint);
             color: var(--white);
         }
 
         nav.scrolled .lang-btn { color: var(--slate-light); }
-        nav.scrolled .lang-btn.active { background: var(--emerald); color: var(--white); }
+        nav.scrolled .lang-btn.active { background: var(--mint); color: var(--white); }
 
         .hamburger {
             display: none;
             flex-direction: column;
             gap: 5px;
-            cursor: pointer;
+            cursor: none;
             background: none;
             border: none;
             padding: 5px;
@@ -139,7 +163,7 @@
             transition: all 0.3s;
         }
 
-        nav.scrolled .hamburger span { background: var(--emerald-dark); }
+        nav.scrolled .hamburger span { background: var(--mint-darker); }
 
         .nav-right {
             display: flex;
@@ -154,7 +178,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(27, 67, 50, 0.97);
+            background: rgba(26, 61, 58, 0.97);
             z-index: 999;
             display: flex;
             flex-direction: column;
@@ -163,7 +187,7 @@
             gap: 2rem;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s;
+            transition: opacity 0.4s;
         }
 
         .mobile-menu.open {
@@ -174,15 +198,17 @@
         .mobile-menu a {
             color: var(--white);
             text-decoration: none;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         .mobile-menu .lang-toggle-mobile {
             display: flex;
             gap: 0;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.35);
             border-radius: 20px;
             overflow: hidden;
             margin-top: 1rem;
@@ -194,14 +220,14 @@
             font-weight: 600;
             letter-spacing: 1px;
             background: transparent;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.6);
             border: none;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s;
         }
 
         .mobile-menu .lang-btn-m.active {
-            background: var(--emerald);
+            background: var(--mint);
             color: var(--white);
         }
 
@@ -213,7 +239,7 @@
             border: none;
             color: var(--white);
             font-size: 2rem;
-            cursor: pointer;
+            cursor: none;
         }
 
         /* HERO */
@@ -232,7 +258,7 @@
             position: absolute;
             inset: -20px;
             background: url('img/local/hero.jpg') center/cover no-repeat;
-            filter: blur(4px) brightness(0.4);
+            filter: blur(6px) brightness(0.35);
             transform: scale(1.05);
         }
 
@@ -243,20 +269,29 @@
             padding: 2rem;
         }
 
-        .hero-logo {
-            width: min(320px, 70vw);
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
+        .hero-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 700;
+            letter-spacing: 12px;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow:
+                0 0 20px rgba(92, 224, 210, 0.6),
+                0 0 40px rgba(92, 224, 210, 0.4),
+                0 0 80px rgba(92, 224, 210, 0.25),
+                0 0 120px rgba(92, 224, 210, 0.15);
+            margin-bottom: 1rem;
+            line-height: 1;
         }
 
         .hero-tagline {
             font-family: 'DM Sans', sans-serif;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
             font-weight: 300;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            opacity: 0.9;
-            margin-bottom: 2.5rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
         }
 
         .hero-cta {
@@ -265,54 +300,48 @@
             border: 1px solid var(--gold);
             color: var(--white);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            transition: all 0.3s;
+            transition: all 0.4s;
         }
 
         .hero-cta:hover {
             background: var(--gold);
-            color: var(--emerald-dark);
+            color: var(--mint-darker);
         }
 
         .hero-scroll {
             position: absolute;
-            bottom: 2rem;
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: center;
         }
 
         .hero-scroll span {
             display: block;
             width: 1px;
-            height: 40px;
-            background: rgba(255,255,255,0.3);
-            margin: 0.5rem auto 0;
-            animation: scrollLine 2s ease-in-out infinite;
+            height: 50px;
+            background: rgba(255,255,255,0.25);
+            animation: scrollLine 2.5s ease-in-out infinite;
         }
 
         @keyframes scrollLine {
-            0%, 100% { transform: scaleY(1); opacity: 0.3; }
-            50% { transform: scaleY(1.5); opacity: 0.8; }
+            0%, 100% { transform: scaleY(1); opacity: 0.2; }
+            50% { transform: scaleY(1.4); opacity: 0.7; }
         }
 
         /* SECTIONS */
-        section { padding: 6rem 2rem; }
+        section { padding: 7rem 2rem; }
 
         .section-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--emerald);
+            color: var(--mint);
             margin-bottom: 1rem;
         }
 
@@ -320,7 +349,7 @@
             font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 500;
-            color: var(--emerald-dark);
+            color: var(--mint-darker);
             margin-bottom: 1.5rem;
             line-height: 1.2;
         }
@@ -372,14 +401,14 @@
             gap: 3rem;
             margin-top: 2.5rem;
             padding-top: 2.5rem;
-            border-top: 1px solid rgba(45, 106, 79, 0.15);
+            border-top: 1px solid rgba(91, 190, 183, 0.2);
         }
 
         .about-stat-number {
             font-family: 'Playfair Display', serif;
             font-size: 2.2rem;
             font-weight: 600;
-            color: var(--emerald);
+            color: var(--mint);
         }
 
         .about-stat-label {
@@ -390,71 +419,9 @@
             margin-top: 0.3rem;
         }
 
-        /* CUISINE */
-        .cuisine {
-            background: var(--cream);
-        }
-
-        .cuisine-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-
-        .cuisine-header .section-text {
-            margin: 0 auto;
-        }
-
-        .cuisine-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.2rem;
-        }
-
-        .cuisine-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            aspect-ratio: 1;
-            cursor: pointer;
-        }
-
-        .cuisine-card:nth-child(1) {
-            grid-column: span 2;
-            grid-row: span 2;
-            aspect-ratio: auto;
-        }
-
-        .cuisine-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s;
-        }
-
-        .cuisine-card:hover img { transform: scale(1.08); }
-
-        .cuisine-card-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.6));
-            color: var(--white);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .cuisine-card:hover .cuisine-card-overlay { opacity: 1; }
-
-        .cuisine-card-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-        }
-
         /* GALLERY */
         .gallery {
-            background: var(--emerald-dark);
+            background: var(--mint-darker);
             color: var(--white);
         }
 
@@ -487,9 +454,59 @@
 
         .gallery-item:hover img { transform: scale(1.06); }
 
-        .gallery-item:nth-child(1) {
-            grid-column: span 2;
-            aspect-ratio: auto;
+        /* CUISINE */
+        .cuisine {
+            background: var(--cream);
+        }
+
+        .cuisine-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .cuisine-header .section-text {
+            margin: 0 auto;
+        }
+
+        .cuisine-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+        }
+
+        .cuisine-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1;
+        }
+
+        .cuisine-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .cuisine-card:hover img { transform: scale(1.08); }
+
+        .cuisine-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            color: var(--white);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .cuisine-card:hover .cuisine-card-overlay { opacity: 1; }
+
+        .cuisine-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
         }
 
         /* EVENTS */
@@ -517,12 +534,12 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.4s, box-shadow 0.4s;
         }
 
         .event-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
         }
 
         .event-card img {
@@ -537,11 +554,11 @@
 
         .event-card-tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: var(--emerald);
+            color: var(--mint-dark);
             background: var(--sea-mist);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
@@ -551,7 +568,7 @@
         .event-card-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
-            color: var(--emerald-dark);
+            color: var(--mint-darker);
             margin-bottom: 0.5rem;
         }
 
@@ -592,14 +609,37 @@
             height: 200px;
         }
 
+        .catering-cta {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--mint);
+            color: var(--mint-darker);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+        }
+
+        .catering-cta:hover {
+            background: var(--mint);
+            color: var(--white);
+        }
+
         /* REVIEWS */
         .reviews {
             background: var(--sand-light);
+            overflow: hidden;
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .reviews-header {
             text-align: center;
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
         }
 
         .reviews-rating {
@@ -614,7 +654,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 3.5rem;
             font-weight: 700;
-            color: var(--emerald-dark);
+            color: var(--mint-darker);
         }
 
         .reviews-stars {
@@ -639,17 +679,51 @@
             color: var(--slate-light);
         }
 
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+        /* REVIEWS CAROUSEL */
+        .reviews-carousel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .reviews-row {
+            display: flex;
+            width: max-content;
+        }
+
+        .reviews-row-inner {
+            display: flex;
+            gap: 1.5rem;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .reviews-row:nth-child(1) .reviews-row-inner {
+            animation: scrollLeft 40s linear infinite;
+        }
+
+        .reviews-row:nth-child(2) .reviews-row-inner {
+            animation: scrollRight 45s linear infinite;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
         }
 
         .review-card {
             background: var(--white);
-            padding: 2rem;
+            padding: 1.8rem;
             border-radius: 12px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+            min-width: 340px;
+            max-width: 340px;
+            flex-shrink: 0;
         }
 
         .review-card-stars {
@@ -661,22 +735,22 @@
         .review-card-stars .star { width: 14px; height: 14px; }
 
         .review-card-text {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             line-height: 1.7;
             color: var(--slate-light);
             font-style: italic;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .review-card-author {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text);
         }
 
         /* CONTACT */
         .contact {
-            background: var(--emerald-dark);
+            background: var(--mint-darker);
             color: var(--white);
         }
 
@@ -711,11 +785,11 @@
         }
 
         .contact-item-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.45);
             margin-bottom: 0.3rem;
         }
 
@@ -766,8 +840,8 @@
         }
 
         .contact-social a:hover {
-            background: var(--emerald-light);
-            border-color: var(--emerald-light);
+            background: var(--mint);
+            border-color: var(--mint);
         }
 
         .contact-social svg {
@@ -777,30 +851,31 @@
 
         /* FOOTER */
         footer {
-            background: #0F2419;
+            background: #0E2623;
             padding: 2rem;
             text-align: center;
         }
 
         .footer-brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.4);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: rgba(255,255,255,0.35);
             margin-bottom: 0.5rem;
         }
 
         .footer-text {
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.2);
         }
 
         .footer-text a {
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.3);
             text-decoration: none;
         }
 
-        .footer-text a:hover { color: rgba(255,255,255,0.6); }
+        .footer-text a:hover { color: rgba(255,255,255,0.5); }
 
         /* RESPONSIVE */
         @media (max-width: 1024px) {
@@ -812,14 +887,10 @@
             }
 
             .cuisine-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .events-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .reviews-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -828,7 +899,10 @@
             .nav-links { display: none; }
             .hamburger { display: flex; }
 
-            section { padding: 4rem 1.5rem; }
+            section { padding: 4.5rem 1.5rem; }
+            .reviews { padding-left: 0; padding-right: 0; }
+
+            .hero-title { letter-spacing: 6px; }
 
             .about-images {
                 grid-template-columns: 1fr;
@@ -844,21 +918,11 @@
             }
 
             .cuisine-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .cuisine-card:nth-child(1) {
-                grid-column: span 2;
-                grid-row: span 1;
-                aspect-ratio: 16/9;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .gallery-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .gallery-item:nth-child(1) {
-                grid-column: span 2;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .event-card img {
@@ -876,28 +940,31 @@
             .catering-images img {
                 height: 200px;
             }
+
+            .review-card {
+                min-width: 280px;
+                max-width: 280px;
+                padding: 1.4rem;
+            }
         }
 
         @media (max-width: 480px) {
+            .hero-title {
+                letter-spacing: 4px;
+                font-size: 2.8rem;
+            }
+
             .hero-tagline {
                 letter-spacing: 2px;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
 
             .cuisine-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cuisine-card:nth-child(1) {
-                grid-column: span 1;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .gallery-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .gallery-item:nth-child(1) {
-                grid-column: span 1;
             }
 
             .about-stats {
@@ -908,30 +975,91 @@
             .reviews-score {
                 font-size: 2.5rem;
             }
+
+            .review-card {
+                min-width: 260px;
+                max-width: 260px;
+            }
         }
 
-        /* ANIMATIONS */
-        .fade-in {
+        /* SCROLL REVEAL ANIMATIONS */
+        .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .fade-in.visible {
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+        .reveal-delay-4 { transition-delay: 0.6s; }
+
+        .hero-content .hero-title,
+        .hero-content .hero-tagline,
+        .hero-content .hero-cta {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .hero-content .hero-tagline { animation-delay: 0.3s; }
+        .hero-content .hero-cta { animation-delay: 0.6s; }
+
+        @keyframes heroReveal {
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
 
 <!-- NAV -->
 <nav id="navbar">
     <a href="#" class="nav-brand">MARALMA</a>
     <ul class="nav-links">
         <li><a href="#about" data-i18n="nav.about">Nosotros</a></li>
-        <li><a href="#cuisine" data-i18n="nav.cuisine">Cocina</a></li>
         <li><a href="#gallery" data-i18n="nav.gallery">Galería</a></li>
+        <li><a href="#cuisine" data-i18n="nav.cuisine">Cocina</a></li>
         <li><a href="#events" data-i18n="nav.events">Eventos</a></li>
         <li><a href="#reviews" data-i18n="nav.reviews">Opiniones</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
@@ -951,8 +1079,8 @@
 <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-close" id="mobileClose">&times;</button>
     <a href="#about" data-i18n="nav.about">Nosotros</a>
-    <a href="#cuisine" data-i18n="nav.cuisine">Cocina</a>
     <a href="#gallery" data-i18n="nav.gallery">Galería</a>
+    <a href="#cuisine" data-i18n="nav.cuisine">Cocina</a>
     <a href="#events" data-i18n="nav.events">Eventos</a>
     <a href="#reviews" data-i18n="nav.reviews">Opiniones</a>
     <a href="#contact" data-i18n="nav.contact">Contacto</a>
@@ -966,7 +1094,7 @@
 <section class="hero" id="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-        <img src="img/local/logo-neon.jpeg" alt="MARALMA" class="hero-logo">
+        <h1 class="hero-title">MARALMA</h1>
         <p class="hero-tagline" data-i18n="hero.tagline">Club Náutico Santa Pola</p>
         <a href="tel:+34633910795" class="hero-cta" data-i18n="hero.cta">Reservar Mesa</a>
     </div>
@@ -979,7 +1107,7 @@
 <section class="about" id="about">
     <div class="container">
         <div class="about-grid">
-            <div class="fade-in">
+            <div class="reveal-left">
                 <p class="section-label" data-i18n="about.label">Nuestro Restaurante</p>
                 <h2 class="section-title" data-i18n="about.title">Donde el Mediterráneo se vive en cada plato</h2>
                 <p class="section-text" data-i18n="about.text">Ubicado en el corazón del Club Náutico de Santa Pola, MARALMA ofrece una experiencia gastronómica única con vistas al puerto deportivo. Nuestra cocina fusiona la tradición mediterránea con toques contemporáneos, utilizando los mejores productos de la costa alicantina.</p>
@@ -998,10 +1126,40 @@
                     </div>
                 </div>
             </div>
-            <div class="about-images fade-in">
-                <img src="img/local/terrace-marina.jpeg" alt="Terraza MARALMA">
-                <img src="img/local/interior-plants.jpeg" alt="Interior MARALMA">
-                <img src="img/local/terrace-glasses.jpeg" alt="Terraza con vistas">
+            <div class="about-images reveal-right">
+                <img src="img/food/burrata.webp" alt="Burrata">
+                <img src="img/food/rice-prawn.jpeg" alt="Arroz con carabinero">
+                <img src="img/food/scallops.jpeg" alt="Zamburiñas">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY (El Espacio) -->
+<section class="gallery" id="gallery">
+    <div class="container">
+        <div class="gallery-header reveal">
+            <p class="section-label" data-i18n="gallery.label">El Espacio</p>
+            <h2 class="section-title" data-i18n="gallery.title">Un rincón frente al mar</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item reveal-scale reveal-delay-1">
+                <img src="img/local/terrace-dining.jpeg" alt="Terraza MARALMA">
+            </div>
+            <div class="gallery-item reveal-scale reveal-delay-2">
+                <img src="img/local/table-setting.jpeg" alt="Mesa con vistas">
+            </div>
+            <div class="gallery-item reveal-scale reveal-delay-3">
+                <img src="img/local/bar-sea-view.jpeg" alt="Bar con vistas">
+            </div>
+            <div class="gallery-item reveal-scale reveal-delay-1">
+                <img src="img/local/interior-plants.jpeg" alt="Interior">
+            </div>
+            <div class="gallery-item reveal-scale reveal-delay-2">
+                <img src="img/local/interior-burgundy.jpeg" alt="Interior">
+            </div>
+            <div class="gallery-item reveal-scale reveal-delay-3">
+                <img src="img/local/terrace-tables.jpeg" alt="Terraza mesas">
             </div>
         </div>
     </div>
@@ -1010,61 +1168,61 @@
 <!-- CUISINE -->
 <section class="cuisine" id="cuisine">
     <div class="container">
-        <div class="cuisine-header fade-in">
+        <div class="cuisine-header reveal">
             <p class="section-label" data-i18n="cuisine.label">Nuestra Cocina</p>
             <h2 class="section-title" data-i18n="cuisine.title">Sabores del Mediterráneo</h2>
             <p class="section-text" data-i18n="cuisine.text">Productos frescos de la lonja de Santa Pola, elaboraciones que respetan la esencia de cada ingrediente y una presentación que enamora a la vista.</p>
         </div>
-        <div class="cuisine-grid fade-in">
-            <div class="cuisine-card">
+        <div class="cuisine-grid">
+            <div class="cuisine-card reveal-scale reveal-delay-1">
                 <img src="img/food/octopus.webp" alt="Pulpo">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish1">Pulpo a la brasa</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-2">
                 <img src="img/food/tuna-tataki.webp" alt="Tataki de atún">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish2">Tataki de atún</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-3">
                 <img src="img/food/rice-prawn.jpeg" alt="Arroz">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish3">Arroz con carabinero</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-1">
                 <img src="img/food/scallops.jpeg" alt="Zamburiñas">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish4">Zamburiñas al horno</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-2">
                 <img src="img/food/burrata.webp" alt="Burrata">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish5">Burrata con pesto</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-3">
                 <img src="img/food/cod-fish.webp" alt="Bacalao">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish6">Bacalao confitado</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-1">
                 <img src="img/food/fideua.webp" alt="Fideuá">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish7">Fideuá marinera</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-2">
                 <img src="img/food/steak.webp" alt="Carne">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish8">Entrecot a la parrilla</p>
                 </div>
             </div>
-            <div class="cuisine-card">
+            <div class="cuisine-card reveal-scale reveal-delay-3">
                 <img src="img/food/tiramisu.webp" alt="Tiramisú">
                 <div class="cuisine-card-overlay">
                     <p class="cuisine-card-name" data-i18n="cuisine.dish9">Tiramisú casero</p>
@@ -1074,43 +1232,16 @@
     </div>
 </section>
 
-<!-- GALLERY -->
-<section class="gallery" id="gallery">
-    <div class="container">
-        <div class="gallery-header fade-in">
-            <p class="section-label" data-i18n="gallery.label">El Espacio</p>
-            <h2 class="section-title" data-i18n="gallery.title">Un rincón frente al mar</h2>
-        </div>
-        <div class="gallery-grid fade-in">
-            <div class="gallery-item">
-                <img src="img/local/terrace-dining.jpeg" alt="Terraza MARALMA">
-            </div>
-            <div class="gallery-item">
-                <img src="img/local/table-setting.jpeg" alt="Mesa con vistas">
-            </div>
-            <div class="gallery-item">
-                <img src="img/local/bar-sea-view.jpeg" alt="Bar con vistas">
-            </div>
-            <div class="gallery-item">
-                <img src="img/local/interior-burgundy.jpeg" alt="Interior">
-            </div>
-            <div class="gallery-item">
-                <img src="img/local/terrace-tables.jpeg" alt="Terraza mesas">
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- EVENTS -->
 <section class="events" id="events">
     <div class="container">
-        <div class="events-header fade-in">
+        <div class="events-header reveal">
             <p class="section-label" data-i18n="events.label">Eventos & Música</p>
             <h2 class="section-title" data-i18n="events.title">Más que un restaurante</h2>
             <p class="section-text" data-i18n="events.text">Disfruta de nuestras tardes musicales, eventos temáticos y celebraciones privadas con las mejores vistas al puerto de Santa Pola.</p>
         </div>
-        <div class="events-grid fade-in">
-            <div class="event-card">
+        <div class="events-grid">
+            <div class="event-card reveal reveal-delay-1">
                 <img src="img/events/tardes-maralma.jpeg" alt="Las Tardes de Maralma">
                 <div class="event-card-body">
                     <span class="event-card-tag" data-i18n="events.card1.tag">Cada Sábado</span>
@@ -1118,7 +1249,7 @@
                     <p class="event-card-text" data-i18n="events.card1.text">Todos los sábados desde las 17h, disfruta de la mejor música con DJ GeNeeR mientras contemplas el atardecer sobre el puerto.</p>
                 </div>
             </div>
-            <div class="event-card">
+            <div class="event-card reveal reveal-delay-2">
                 <img src="img/events/indie-party.jpeg" alt="Indie Party">
                 <div class="event-card-body">
                     <span class="event-card-tag" data-i18n="events.card2.tag">Música en Vivo</span>
@@ -1126,7 +1257,7 @@
                     <p class="event-card-text" data-i18n="events.card2.text">Sesiones de música indie y alternativa en un ambiente único junto al mar. Buena música, gastronomía y compañía.</p>
                 </div>
             </div>
-            <div class="event-card">
+            <div class="event-card reveal reveal-delay-3">
                 <img src="img/events/flamenco-tech.jpeg" alt="Flamenco Tech">
                 <div class="event-card-body">
                     <span class="event-card-tag" data-i18n="events.card3.tag">Fusión</span>
@@ -1134,7 +1265,7 @@
                     <p class="event-card-text" data-i18n="events.card3.text">La fusión perfecta entre el flamenco tradicional y los sonidos electrónicos. Una experiencia sensorial en el Club Náutico.</p>
                 </div>
             </div>
-            <div class="event-card">
+            <div class="event-card reveal reveal-delay-4">
                 <img src="img/events/event-celebration.jpeg" alt="Celebraciones">
                 <div class="event-card-body">
                     <span class="event-card-tag" data-i18n="events.card4.tag">Celebraciones</span>
@@ -1150,16 +1281,16 @@
 <section class="catering" id="catering">
     <div class="container">
         <div class="catering-grid">
-            <div class="catering-images fade-in">
+            <div class="catering-images reveal-left">
                 <img src="img/local/event-marina.jpeg" alt="Evento con vistas al puerto">
                 <img src="img/local/event-balloons.jpeg" alt="Celebración">
                 <img src="img/food/croquettes.webp" alt="Catering MARALMA">
             </div>
-            <div class="fade-in">
+            <div class="reveal-right">
                 <p class="section-label" data-i18n="catering.label">Catering</p>
                 <h2 class="section-title" data-i18n="catering.title">Llevamos MARALMA a tu evento</h2>
                 <p class="section-text" data-i18n="catering.text">Nuestro servicio de catering ofrece la misma excelencia gastronómica de nuestro restaurante en el lugar que elijas. Menús personalizados para cada ocasión, con la calidad y el mimo que nos caracteriza.</p>
-                <a href="mailto:maralmacatering@gmail.com" class="hero-cta" style="margin-top: 2rem; display: inline-block; border-color: var(--emerald); color: var(--emerald-dark);" data-i18n="catering.cta">Solicitar Presupuesto</a>
+                <a href="mailto:maralmacatering@gmail.com" class="catering-cta" data-i18n="catering.cta">Solicitar Presupuesto</a>
             </div>
         </div>
     </div>
@@ -1167,57 +1298,44 @@
 
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
-    <div class="container">
-        <div class="reviews-header fade-in">
-            <div class="reviews-rating">
-                <span class="reviews-score">4.7</span>
-                <div class="reviews-stars">
-                    <div class="reviews-stars-row">
-                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="star" style="color: #ddd;" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    </div>
-                    <span class="reviews-source">TripAdvisor</span>
-                </div>
-            </div>
-            <p class="section-label" style="text-align:center;" data-i18n="reviews.label">Opiniones</p>
-            <h2 class="section-title" style="text-align:center;" data-i18n="reviews.title">Lo que dicen nuestros clientes</h2>
-        </div>
-        <div class="reviews-grid fade-in">
-            <div class="review-card">
-                <div class="review-card-stars">
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                </div>
-                <p class="review-card-text" data-i18n="reviews.review1.text">"Increíble experiencia. La comida es espectacular, el ambiente es precioso y las vistas al puerto son una maravilla. Sin duda volveremos."</p>
-                <p class="review-card-author">Fredrik O.</p>
-            </div>
-            <div class="review-card">
-                <div class="review-card-stars">
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                </div>
-                <p class="review-card-text" data-i18n="reviews.review2.text">"El sitio perfecto para disfrutar de una buena comida con vistas. El arroz estaba de escándalo y el servicio muy atento. Un 10."</p>
-                <p class="review-card-author">Pioneer37</p>
-            </div>
-            <div class="review-card">
-                <div class="review-card-stars">
+    <div class="reviews-header reveal">
+        <div class="reviews-rating">
+            <span class="reviews-score">4.7</span>
+            <div class="reviews-stars">
+                <div class="reviews-stars-row">
                     <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     <svg class="star" style="color: #ddd;" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 </div>
-                <p class="review-card-text" data-i18n="reviews.review3.text">"Buena comida y muy buen ambiente. La terraza con vistas al puerto es ideal para una cena tranquila. Recomendable."</p>
-                <p class="review-card-author">Javier G.</p>
+                <span class="reviews-source">TripAdvisor</span>
+            </div>
+        </div>
+        <p class="section-label" data-i18n="reviews.label">Opiniones</p>
+        <h2 class="section-title" data-i18n="reviews.title">Lo que dicen nuestros clientes</h2>
+    </div>
+
+    <div class="reviews-carousel reveal">
+        <!-- ROW 1 - scrolls left -->
+        <div class="reviews-row">
+            <div class="reviews-row-inner" id="reviewsRow1">
+                <!-- Set A -->
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r1">"Increíble experiencia. La comida es espectacular, el ambiente es precioso y las vistas al puerto son una maravilla. Sin duda volveremos."</p><p class="review-card-author">Fredrik O.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r2">"El sitio perfecto para disfrutar de una buena comida con vistas. El arroz estaba de escándalo y el servicio muy atento. Un 10."</p><p class="review-card-author">Pioneer37</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r3">"La terraza es un sueño. Cenamos viendo el atardecer y la experiencia fue mágica. La fideuá, de las mejores que hemos probado."</p><p class="review-card-author">Laura M.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" style="color:#ddd" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r4">"Buena comida y muy buen ambiente. La terraza con vistas al puerto es ideal para una cena tranquila. Recomendable."</p><p class="review-card-author">Javier G.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r5">"Un descubrimiento maravilloso. El pulpo estaba perfecto y el tiramisú casero es de otro nivel. Repetiremos seguro."</p><p class="review-card-author">Ana B.</p></div>
+            </div>
+        </div>
+        <!-- ROW 2 - scrolls right -->
+        <div class="reviews-row">
+            <div class="reviews-row-inner" id="reviewsRow2">
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r6">"Ambiente inmejorable para una cena romántica. Las vistas al puerto al atardecer y la música de fondo crean algo especial."</p><p class="review-card-author">Carlos R.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r7">"Fuimos un sábado por la tarde y disfrutamos de la música en directo mientras comíamos. Muy recomendable las zamburiñas y el atún."</p><p class="review-card-author">María T.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" style="color:#ddd" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r8">"Sitio con mucho encanto. La decoración es preciosa y se nota el cariño en cada detalle. El servicio de catering para nuestra boda fue perfecto."</p><p class="review-card-author">Elena P.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r9">"Lugar con encanto a pie de puerto. La burrata estaba espectacular y los cócteles muy bien elaborados. Volveremos sin duda."</p><p class="review-card-author">Daniel S.</p></div>
+                <div class="review-card"><div class="review-card-stars"><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="review-card-text" data-i18n="reviews.r10">"El mejor restaurante de Santa Pola con diferencia. El entrecot estaba en su punto perfecto. La decoración y la ubicación son incomparables."</p><p class="review-card-author">Roberto V.</p></div>
             </div>
         </div>
     </div>
@@ -1227,7 +1345,7 @@
 <section class="contact" id="contact">
     <div class="container">
         <div class="contact-grid">
-            <div class="fade-in">
+            <div class="reveal-left">
                 <p class="section-label" data-i18n="contact.label">Encuéntranos</p>
                 <h2 class="section-title" data-i18n="contact.title">Ven a visitarnos</h2>
                 <div class="contact-info-list">
@@ -1272,7 +1390,7 @@
                     </a>
                 </div>
             </div>
-            <div class="contact-map fade-in">
+            <div class="contact-map reveal-right">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3134.5!2d-0.5667!3d38.1908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd63a9f8b5b5b5b5%3A0x0!2sClub+N%C3%A1utico+Santa+Pola!5e0!3m2!1ses!2ses!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
@@ -1280,7 +1398,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer>
+<footer class="reveal">
     <p class="footer-brand">MARALMA</p>
     <p class="footer-text" data-i18n="footer.text">Club Náutico Santa Pola &middot; <a href="https://webian.es" target="_blank">Webian</a></p>
 </footer>
@@ -1339,9 +1457,16 @@ const translations = {
         'catering.cta': 'Solicitar Presupuesto',
         'reviews.label': 'Opiniones',
         'reviews.title': 'Lo que dicen nuestros clientes',
-        'reviews.review1.text': '"Increíble experiencia. La comida es espectacular, el ambiente es precioso y las vistas al puerto son una maravilla. Sin duda volveremos."',
-        'reviews.review2.text': '"El sitio perfecto para disfrutar de una buena comida con vistas. El arroz estaba de escándalo y el servicio muy atento. Un 10."',
-        'reviews.review3.text': '"Buena comida y muy buen ambiente. La terraza con vistas al puerto es ideal para una cena tranquila. Recomendable."',
+        'reviews.r1': '"Increíble experiencia. La comida es espectacular, el ambiente es precioso y las vistas al puerto son una maravilla. Sin duda volveremos."',
+        'reviews.r2': '"El sitio perfecto para disfrutar de una buena comida con vistas. El arroz estaba de escándalo y el servicio muy atento. Un 10."',
+        'reviews.r3': '"La terraza es un sueño. Cenamos viendo el atardecer y la experiencia fue mágica. La fideuá, de las mejores que hemos probado."',
+        'reviews.r4': '"Buena comida y muy buen ambiente. La terraza con vistas al puerto es ideal para una cena tranquila. Recomendable."',
+        'reviews.r5': '"Un descubrimiento maravilloso. El pulpo estaba perfecto y el tiramisú casero es de otro nivel. Repetiremos seguro."',
+        'reviews.r6': '"Ambiente inmejorable para una cena romántica. Las vistas al puerto al atardecer y la música de fondo crean algo especial."',
+        'reviews.r7': '"Fuimos un sábado por la tarde y disfrutamos de la música en directo mientras comíamos. Muy recomendable las zamburiñas y el atún."',
+        'reviews.r8': '"Sitio con mucho encanto. La decoración es preciosa y se nota el cariño en cada detalle. El servicio de catering para nuestra boda fue perfecto."',
+        'reviews.r9': '"Lugar con encanto a pie de puerto. La burrata estaba espectacular y los cócteles muy bien elaborados. Volveremos sin duda."',
+        'reviews.r10': '"El mejor restaurante de Santa Pola con diferencia. El entrecot estaba en su punto perfecto. La decoración y la ubicación son incomparables."',
         'contact.label': 'Encuéntranos',
         'contact.title': 'Ven a visitarnos',
         'contact.address.label': 'Dirección',
@@ -1404,9 +1529,16 @@ const translations = {
         'catering.cta': 'Request a Quote',
         'reviews.label': 'Reviews',
         'reviews.title': 'What our guests say',
-        'reviews.review1.text': '"Incredible experience. The food is spectacular, the atmosphere is beautiful and the harbour views are wonderful. We will definitely come back."',
-        'reviews.review2.text': '"The perfect place to enjoy great food with views. The rice was outstanding and the service very attentive. A 10 out of 10."',
-        'reviews.review3.text': '"Great food and a wonderful atmosphere. The terrace overlooking the harbour is ideal for a relaxed dinner. Highly recommended."',
+        'reviews.r1': '"Incredible experience. The food is spectacular, the atmosphere is beautiful and the harbour views are wonderful. We will definitely come back."',
+        'reviews.r2': '"The perfect place to enjoy great food with views. The rice was outstanding and the service very attentive. A 10 out of 10."',
+        'reviews.r3': '"The terrace is a dream. We dined watching the sunset and the experience was magical. The fideuá, one of the best we have ever tried."',
+        'reviews.r4': '"Great food and a wonderful atmosphere. The terrace overlooking the harbour is ideal for a relaxed dinner. Highly recommended."',
+        'reviews.r5': '"A wonderful discovery. The octopus was perfect and the homemade tiramisu is on another level. We will definitely be back."',
+        'reviews.r6': '"Unbeatable atmosphere for a romantic dinner. The harbour views at sunset and the background music create something truly special."',
+        'reviews.r7': '"We went on a Saturday afternoon and enjoyed the live music while eating. Highly recommend the scallops and the tuna."',
+        'reviews.r8': '"A place full of charm. The decor is beautiful and you can feel the love in every detail. The catering service for our wedding was perfect."',
+        'reviews.r9': '"Charming spot right by the harbour. The burrata was spectacular and the cocktails very well crafted. We will return without a doubt."',
+        'reviews.r10': '"The best restaurant in Santa Pola by far. The rib-eye was cooked to perfection. The decor and location are second to none."',
         'contact.label': 'Find Us',
         'contact.title': 'Come visit us',
         'contact.address.label': 'Address',
@@ -1425,18 +1557,13 @@ function setLang(lang) {
     currentLang = lang;
     localStorage.setItem('maralma-lang', lang);
     document.documentElement.lang = lang;
-
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-            el.innerHTML = translations[lang][key];
-        }
+        if (translations[lang][key]) el.innerHTML = translations[lang][key];
     });
-
     document.title = translations[lang]['meta.title'];
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', translations[lang]['meta.description']);
-
     document.querySelectorAll('.lang-btn, .lang-btn-m').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
     });
@@ -1445,7 +1572,6 @@ function setLang(lang) {
 document.querySelectorAll('.lang-btn, .lang-btn-m').forEach(btn => {
     btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
-
 setLang(currentLang);
 
 // NAV SCROLL
@@ -1458,34 +1584,66 @@ window.addEventListener('scroll', () => {
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileClose = document.getElementById('mobileClose');
-
 hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
 mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
-
 mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => mobileMenu.classList.remove('open'));
 });
 
-// FADE-IN ANIMATIONS
-const observer = new IntersectionObserver((entries) => {
+// SCROLL REVEAL
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
         }
     });
-}, { threshold: 0.1 });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    revealObserver.observe(el);
+});
 
 // SMOOTH SCROLL
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+});
+
+// DUPLICATE REVIEW ROWS FOR INFINITE SCROLL
+function duplicateRow(id) {
+    const row = document.getElementById(id);
+    if (!row) return;
+    const cards = row.innerHTML;
+    row.innerHTML = cards + cards;
+}
+duplicateRow('reviewsRow1');
+duplicateRow('reviewsRow2');
+
+// CUSTOM CURSOR
+const cursor = document.getElementById('cursor');
+let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.15;
+    cursorY += (mouseY - cursorY) * 0.15;
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+    requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+const hoverTargets = document.querySelectorAll('a, button, .cuisine-card, .event-card, .gallery-item');
+hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
 });
 </script>
 
