@@ -430,10 +430,10 @@
 
         .parallax-divider-bg {
             position: absolute;
-            inset: -30%;
+            inset: -20%;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            will-change: transform;
         }
 
         .parallax-divider-overlay {
@@ -450,10 +450,6 @@
             .parallax-divider {
                 height: 30vh;
                 min-height: 200px;
-            }
-            .parallax-divider-bg {
-                background-attachment: scroll;
-                inset: -10%;
             }
         }
 
@@ -898,12 +894,14 @@
         }
 
         .footer-brand {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 5px;
-            color: rgba(255,255,255,0.35);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-brand img {
+            height: 18px;
+            width: auto;
+            opacity: 0.35;
+            filter: brightness(0) invert(1);
         }
 
         .footer-text {
@@ -1452,7 +1450,7 @@
 
 <!-- FOOTER -->
 <footer class="reveal">
-    <p class="footer-brand">MARALMA</p>
+    <p class="footer-brand"><img src="img/local/logo.png" alt="MARALMA"></p>
     <p class="footer-text" data-i18n="footer.text">Club Náutico Santa Pola &middot; <a href="https://webian.es" target="_blank">Webian</a></p>
 </footer>
 
@@ -1674,6 +1672,18 @@ function duplicateRow(id) {
 }
 duplicateRow('reviewsRow1');
 duplicateRow('reviewsRow2');
+
+// PARALLAX DIVIDERS
+const parallaxBgs = document.querySelectorAll('.parallax-divider-bg');
+window.addEventListener('scroll', () => {
+    parallaxBgs.forEach(bg => {
+        const parent = bg.parentElement;
+        const rect = parent.getBoundingClientRect();
+        const speed = 0.35;
+        const yOffset = rect.top * speed;
+        bg.style.transform = 'translateY(' + yOffset + 'px)';
+    });
+}, { passive: true });
 
 // CUSTOM CURSOR
 const cursor = document.getElementById('cursor');
