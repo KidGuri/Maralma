@@ -84,16 +84,22 @@
         }
 
         .nav-brand {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 6px;
-            color: var(--white);
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            transition: color 0.5s;
+            transition: filter 0.5s;
         }
 
-        nav.scrolled .nav-brand { color: var(--mint-darker); }
+        .nav-brand img {
+            height: 22px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            transition: filter 0.5s;
+        }
+
+        nav.scrolled .nav-brand img {
+            filter: brightness(0) invert(0.15);
+        }
 
         .nav-links {
             display: flex;
@@ -1090,7 +1096,7 @@
 
 <!-- NAV -->
 <nav id="navbar">
-    <a href="#" class="nav-brand">MARALMA</a>
+    <a href="#" class="nav-brand"><img src="img/local/logo.png" alt="MARALMA"></a>
     <ul class="nav-links">
         <li><a href="#about" data-i18n="nav.about">Nosotros</a></li>
         <li><a href="#gallery" data-i18n="nav.gallery">Galería</a></li>
