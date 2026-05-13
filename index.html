@@ -269,19 +269,13 @@
             padding: 2rem;
         }
 
-        .hero-title {
-            font-family: 'DM Sans', sans-serif;
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: 700;
-            letter-spacing: 12px;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow:
-                0 0 20px rgba(92, 224, 210, 0.6),
-                0 0 40px rgba(92, 224, 210, 0.4),
-                0 0 80px rgba(92, 224, 210, 0.25),
-                0 0 120px rgba(92, 224, 210, 0.15);
-            margin-bottom: 1rem;
-            line-height: 1;
+        .hero-logo {
+            width: min(480px, 75vw);
+            margin-bottom: 1.5rem;
+            filter:
+                drop-shadow(0 0 15px rgba(92, 224, 210, 0.7))
+                drop-shadow(0 0 40px rgba(92, 224, 210, 0.4))
+                drop-shadow(0 0 80px rgba(92, 224, 210, 0.2));
         }
 
         .hero-tagline {
@@ -419,6 +413,44 @@
             margin-top: 0.3rem;
         }
 
+        /* PARALLAX DIVIDER */
+        .parallax-divider {
+            position: relative;
+            height: 45vh;
+            min-height: 300px;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .parallax-divider-bg {
+            position: absolute;
+            inset: -30%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .parallax-divider-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(26, 61, 58, 0.15),
+                rgba(26, 61, 58, 0.05)
+            );
+        }
+
+        @media (max-width: 768px) {
+            .parallax-divider {
+                height: 30vh;
+                min-height: 200px;
+            }
+            .parallax-divider-bg {
+                background-attachment: scroll;
+                inset: -10%;
+            }
+        }
+
         /* GALLERY */
         .gallery {
             background: var(--mint-darker);
@@ -546,7 +578,10 @@
             width: 100%;
             height: 300px;
             object-fit: cover;
+            transition: transform 0.6s;
         }
+
+        .event-card:hover img { transform: scale(1.08); }
 
         .event-card-body {
             padding: 1.5rem;
@@ -1032,7 +1067,7 @@
         .reveal-delay-3 { transition-delay: 0.45s; }
         .reveal-delay-4 { transition-delay: 0.6s; }
 
-        .hero-content .hero-title,
+        .hero-content .hero-logo,
         .hero-content .hero-tagline,
         .hero-content .hero-cta {
             opacity: 0;
@@ -1094,7 +1129,7 @@
 <section class="hero" id="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-        <h1 class="hero-title">MARALMA</h1>
+        <img src="img/local/logo.png" alt="MARALMA" class="hero-logo">
         <p class="hero-tagline" data-i18n="hero.tagline">Club Náutico Santa Pola</p>
         <a href="tel:+34633910795" class="hero-cta" data-i18n="hero.cta">Reservar Mesa</a>
     </div>
@@ -1127,13 +1162,19 @@
                 </div>
             </div>
             <div class="about-images reveal-right">
-                <img src="img/food/burrata.webp" alt="Burrata">
+                <img src="img/food/anchovy-toasts.webp" alt="Tostas">
                 <img src="img/food/rice-prawn.jpeg" alt="Arroz con carabinero">
                 <img src="img/food/scallops.jpeg" alt="Zamburiñas">
             </div>
         </div>
     </div>
 </section>
+
+<!-- PARALLAX DIVIDER 1 -->
+<div class="parallax-divider">
+    <div class="parallax-divider-bg" style="background-image: url('img/local/event-marina.jpeg');"></div>
+    <div class="parallax-divider-overlay"></div>
+</div>
 
 <!-- GALLERY (El Espacio) -->
 <section class="gallery" id="gallery">
@@ -1199,9 +1240,9 @@
                 </div>
             </div>
             <div class="cuisine-card reveal-scale reveal-delay-2">
-                <img src="img/food/burrata.webp" alt="Burrata">
+                <img src="img/food/dessert-marina.webp" alt="Postre">
                 <div class="cuisine-card-overlay">
-                    <p class="cuisine-card-name" data-i18n="cuisine.dish5">Burrata con pesto</p>
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish5">Postre con vistas</p>
                 </div>
             </div>
             <div class="cuisine-card reveal-scale reveal-delay-3">
@@ -1231,6 +1272,12 @@
         </div>
     </div>
 </section>
+
+<!-- PARALLAX DIVIDER 2 -->
+<div class="parallax-divider">
+    <div class="parallax-divider-bg" style="background-image: url('img/food/burrata.webp');"></div>
+    <div class="parallax-divider-overlay"></div>
+</div>
 
 <!-- EVENTS -->
 <section class="events" id="events">
@@ -1282,7 +1329,7 @@
     <div class="container">
         <div class="catering-grid">
             <div class="catering-images reveal-left">
-                <img src="img/local/event-marina.jpeg" alt="Evento con vistas al puerto">
+                <img src="img/local/terrace-glasses.jpeg" alt="Terraza con vistas al puerto">
                 <img src="img/local/event-balloons.jpeg" alt="Celebración">
                 <img src="img/food/croquettes.webp" alt="Catering MARALMA">
             </div>
@@ -1429,7 +1476,7 @@ const translations = {
         'cuisine.dish2': 'Tataki de atún',
         'cuisine.dish3': 'Arroz con carabinero',
         'cuisine.dish4': 'Zamburiñas al horno',
-        'cuisine.dish5': 'Burrata con pesto',
+        'cuisine.dish5': 'Postre con vistas',
         'cuisine.dish6': 'Bacalao confitado',
         'cuisine.dish7': 'Fideuá marinera',
         'cuisine.dish8': 'Entrecot a la parrilla',
@@ -1501,7 +1548,7 @@ const translations = {
         'cuisine.dish2': 'Tuna tataki',
         'cuisine.dish3': 'Rice with red prawn',
         'cuisine.dish4': 'Baked scallops',
-        'cuisine.dish5': 'Burrata with pesto',
+        'cuisine.dish5': 'Dessert with a view',
         'cuisine.dish6': 'Confit cod',
         'cuisine.dish7': 'Seafood fideuá',
         'cuisine.dish8': 'Grilled rib-eye',
