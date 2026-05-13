@@ -674,6 +674,7 @@
             overflow: hidden;
             padding-left: 0;
             padding-right: 0;
+            max-width: 100vw;
         }
 
         .reviews-header {
@@ -944,8 +945,6 @@
             section { padding: 4.5rem 1.5rem; }
             .reviews { padding-left: 0; padding-right: 0; }
 
-            .hero-title { letter-spacing: 6px; }
-
             .about-images {
                 grid-template-columns: 1fr;
             }
@@ -953,10 +952,6 @@
             .about-images img,
             .about-images img:first-child {
                 height: 200px;
-            }
-
-            .about-stats {
-                gap: 2rem;
             }
 
             .cuisine-grid {
@@ -975,6 +970,14 @@
                 min-height: 280px;
             }
 
+            .catering-grid {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .catering-text-col { order: 1; }
+            .catering-images-col { order: 2; }
+
             .catering-images {
                 grid-template-columns: 1fr;
             }
@@ -991,11 +994,6 @@
         }
 
         @media (max-width: 480px) {
-            .hero-title {
-                letter-spacing: 4px;
-                font-size: 2.8rem;
-            }
-
             .hero-tagline {
                 letter-spacing: 2px;
                 font-size: 0.75rem;
@@ -1006,12 +1004,19 @@
             }
 
             .gallery-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .about-stats {
-                flex-direction: column;
                 gap: 1.5rem;
+            }
+
+            .about-stat-number {
+                font-size: 1.6rem;
+            }
+
+            .about-stat-label {
+                font-size: 0.65rem;
             }
 
             .reviews-score {
@@ -1335,12 +1340,12 @@
 <section class="catering" id="catering">
     <div class="container">
         <div class="catering-grid">
-            <div class="catering-images reveal-left">
+            <div class="catering-images catering-images-col reveal-left">
                 <img src="img/local/terrace-glasses.jpeg" alt="Terraza con vistas al puerto">
                 <img src="img/local/event-balloons.jpeg" alt="Celebración">
                 <img src="img/food/croquettes.webp" alt="Catering MARALMA">
             </div>
-            <div class="reveal-right">
+            <div class="catering-text-col reveal-right">
                 <p class="section-label" data-i18n="catering.label">Catering</p>
                 <h2 class="section-title" data-i18n="catering.title">Llevamos MARALMA a tu evento</h2>
                 <p class="section-text" data-i18n="catering.text">Nuestro servicio de catering ofrece la misma excelencia gastronómica de nuestro restaurante en el lugar que elijas. Menús personalizados para cada ocasión, con la calidad y el mimo que nos caracteriza.</p>
