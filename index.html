@@ -430,7 +430,10 @@
 
         .parallax-divider-bg {
             position: absolute;
-            inset: -20%;
+            left: 0;
+            right: 0;
+            top: -40%;
+            bottom: -40%;
             background-size: cover;
             background-position: center;
             will-change: transform;
@@ -1675,15 +1678,20 @@ duplicateRow('reviewsRow2');
 
 // PARALLAX DIVIDERS
 const parallaxBgs = document.querySelectorAll('.parallax-divider-bg');
-window.addEventListener('scroll', () => {
+function updateParallax() {
     parallaxBgs.forEach(bg => {
         const parent = bg.parentElement;
         const rect = parent.getBoundingClientRect();
-        const speed = 0.35;
-        const yOffset = rect.top * speed;
+        const winH = window.innerHeight;
+        const progress = (winH - rect.top) / (winH + rect.height);
+        const clamped = Math.max(0, Math.min(1, progress));
+        const maxShift = parent.offsetHeight * 0.35;
+        const yOffset = (clamped - 0.5) * 2 * maxShift;
         bg.style.transform = 'translateY(' + yOffset + 'px)';
     });
-}, { passive: true });
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+updateParallax();
 
 // CUSTOM CURSOR
 const cursor = document.getElementById('cursor');
