@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARALMA — Restaurante en Club Náutico Santa Pola</title>
+    <meta name="description" content="Restaurante MARALMA en el Club Náutico de Santa Pola. Cocina mediterránea con vistas al puerto deportivo. Eventos, música en vivo y catering.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald: #2D6A4F;
+            --emerald-light: #40916C;
+            --emerald-dark: #1B4332;
+            --sand: #F5F0E8;
+            --sand-light: #FAF8F4;
+            --cream: #FFFDF7;
+            --sea-mist: #E8F0ED;
+            --slate: #2C3E50;
+            --slate-light: #5A6C7D;
+            --gold: #C8A96E;
+            --gold-light: #E0CFA9;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-light: #6B7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 0.7rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.4s;
+        }
+
+        nav.scrolled .nav-brand { color: var(--emerald-dark); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--gold-light); }
+        nav.scrolled .nav-links a { color: var(--slate); }
+        nav.scrolled .nav-links a:hover { color: var(--emerald); }
+
+        .lang-toggle {
+            display: flex;
+            gap: 0;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        nav.scrolled .lang-toggle { border-color: var(--emerald-light); }
+
+        .lang-btn {
+            padding: 0.3rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--emerald);
+            color: var(--white);
+        }
+
+        nav.scrolled .lang-btn { color: var(--slate-light); }
+        nav.scrolled .lang-btn.active { background: var(--emerald); color: var(--white); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled .hamburger span { background: var(--emerald-dark); }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* MOBILE NAV */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(27, 67, 50, 0.97);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .mobile-menu .lang-toggle-mobile {
+            display: flex;
+            gap: 0;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .mobile-menu .lang-btn-m {
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu .lang-btn-m.active {
+            background: var(--emerald);
+            color: var(--white);
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: -20px;
+            background: url('img/local/hero.jpg') center/cover no-repeat;
+            filter: blur(4px) brightness(0.4);
+            transform: scale(1.05);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            padding: 2rem;
+        }
+
+        .hero-logo {
+            width: min(320px, 70vw);
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
+        }
+
+        .hero-tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--gold);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold);
+            color: var(--emerald-dark);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .hero-scroll span {
+            display: block;
+            width: 1px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+            margin: 0.5rem auto 0;
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollLine {
+            0%, 100% { transform: scaleY(1); opacity: 0.3; }
+            50% { transform: scaleY(1.5); opacity: 0.8; }
+        }
+
+        /* SECTIONS */
+        section { padding: 6rem 2rem; }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--emerald);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 500;
+            color: var(--emerald-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .section-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--slate-light);
+            max-width: 640px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ABOUT */
+        .about {
+            background: var(--sand-light);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .about-images img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .about-images img:first-child {
+            grid-column: 1 / -1;
+            height: 280px;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(45, 106, 79, 0.15);
+        }
+
+        .about-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--emerald);
+        }
+
+        .about-stat-label {
+            font-size: 0.8rem;
+            color: var(--slate-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        /* CUISINE */
+        .cuisine {
+            background: var(--cream);
+        }
+
+        .cuisine-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .cuisine-header .section-text {
+            margin: 0 auto;
+        }
+
+        .cuisine-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+        }
+
+        .cuisine-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .cuisine-card:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        .cuisine-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .cuisine-card:hover img { transform: scale(1.08); }
+
+        .cuisine-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            color: var(--white);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cuisine-card:hover .cuisine-card-overlay { opacity: 1; }
+
+        .cuisine-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        /* GALLERY */
+        .gallery {
+            background: var(--emerald-dark);
+            color: var(--white);
+        }
+
+        .gallery .section-label { color: var(--gold); }
+        .gallery .section-title { color: var(--white); }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 4/3;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .gallery-item:hover img { transform: scale(1.06); }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            aspect-ratio: auto;
+        }
+
+        /* EVENTS */
+        .events {
+            background: var(--sand);
+        }
+
+        .events-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .events-header .section-text {
+            margin: 0 auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .event-card-body {
+            padding: 1.5rem;
+        }
+
+        .event-card-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--emerald);
+            background: var(--sea-mist);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+
+        .event-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--emerald-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-card-text {
+            font-size: 0.9rem;
+            color: var(--slate-light);
+            line-height: 1.6;
+        }
+
+        /* CATERING */
+        .catering {
+            background: var(--cream);
+            overflow: hidden;
+        }
+
+        .catering-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .catering-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .catering-images img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .catering-images img:last-child {
+            grid-column: 1 / -1;
+            height: 200px;
+        }
+
+        /* REVIEWS */
+        .reviews {
+            background: var(--sand-light);
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .reviews-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviews-score {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--emerald-dark);
+        }
+
+        .reviews-stars {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .reviews-stars-row {
+            display: flex;
+            gap: 3px;
+        }
+
+        .star {
+            width: 18px;
+            height: 18px;
+            color: var(--gold);
+        }
+
+        .reviews-source {
+            font-size: 0.85rem;
+            color: var(--slate-light);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        }
+
+        .review-card-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .review-card-stars .star { width: 14px; height: 14px; }
+
+        .review-card-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--slate-light);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-card-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* CONTACT */
+        .contact {
+            background: var(--emerald-dark);
+            color: var(--white);
+        }
+
+        .contact .section-label { color: var(--gold); }
+        .contact .section-title { color: var(--white); }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .contact-item-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item-value {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.5;
+        }
+
+        .contact-item-value a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item-value a:hover { color: var(--gold); }
+
+        .contact-map {
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+            min-height: 350px;
+        }
+
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: saturate(0.8) brightness(0.9);
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .contact-social a:hover {
+            background: var(--emerald-light);
+            border-color: var(--emerald-light);
+        }
+
+        .contact-social svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0F2419;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.25);
+        }
+
+        .footer-text a {
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+        }
+
+        .footer-text a:hover { color: rgba(255,255,255,0.6); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .catering-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .cuisine-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            section { padding: 4rem 1.5rem; }
+
+            .about-images {
+                grid-template-columns: 1fr;
+            }
+
+            .about-images img,
+            .about-images img:first-child {
+                height: 200px;
+            }
+
+            .about-stats {
+                gap: 2rem;
+            }
+
+            .cuisine-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cuisine-card:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 1;
+                aspect-ratio: 16/9;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 2;
+            }
+
+            .event-card img {
+                height: 220px;
+            }
+
+            .contact-map {
+                min-height: 280px;
+            }
+
+            .catering-images {
+                grid-template-columns: 1fr;
+            }
+
+            .catering-images img {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tagline {
+                letter-spacing: 2px;
+                font-size: 0.8rem;
+            }
+
+            .cuisine-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cuisine-card:nth-child(1) {
+                grid-column: span 1;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 1;
+            }
+
+            .about-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .reviews-score {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <a href="#" class="nav-brand">MARALMA</a>
+    <ul class="nav-links">
+        <li><a href="#about" data-i18n="nav.about">Nosotros</a></li>
+        <li><a href="#cuisine" data-i18n="nav.cuisine">Cocina</a></li>
+        <li><a href="#gallery" data-i18n="nav.gallery">Galería</a></li>
+        <li><a href="#events" data-i18n="nav.events">Eventos</a></li>
+        <li><a href="#reviews" data-i18n="nav.reviews">Opiniones</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+    </ul>
+    <div class="nav-right">
+        <div class="lang-toggle">
+            <button class="lang-btn active" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">&times;</button>
+    <a href="#about" data-i18n="nav.about">Nosotros</a>
+    <a href="#cuisine" data-i18n="nav.cuisine">Cocina</a>
+    <a href="#gallery" data-i18n="nav.gallery">Galería</a>
+    <a href="#events" data-i18n="nav.events">Eventos</a>
+    <a href="#reviews" data-i18n="nav.reviews">Opiniones</a>
+    <a href="#contact" data-i18n="nav.contact">Contacto</a>
+    <div class="lang-toggle-mobile">
+        <button class="lang-btn-m active" data-lang="es">ES</button>
+        <button class="lang-btn-m" data-lang="en">EN</button>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <img src="img/local/logo-neon.jpeg" alt="MARALMA" class="hero-logo">
+        <p class="hero-tagline" data-i18n="hero.tagline">Club Náutico Santa Pola</p>
+        <a href="tel:+34633910795" class="hero-cta" data-i18n="hero.cta">Reservar Mesa</a>
+    </div>
+    <div class="hero-scroll">
+        <span></span>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="fade-in">
+                <p class="section-label" data-i18n="about.label">Nuestro Restaurante</p>
+                <h2 class="section-title" data-i18n="about.title">Donde el Mediterráneo se vive en cada plato</h2>
+                <p class="section-text" data-i18n="about.text">Ubicado en el corazón del Club Náutico de Santa Pola, MARALMA ofrece una experiencia gastronómica única con vistas al puerto deportivo. Nuestra cocina fusiona la tradición mediterránea con toques contemporáneos, utilizando los mejores productos de la costa alicantina.</p>
+                <div class="about-stats">
+                    <div>
+                        <div class="about-stat-number">4.7</div>
+                        <div class="about-stat-label" data-i18n="about.stat1">TripAdvisor</div>
+                    </div>
+                    <div>
+                        <div class="about-stat-number" data-i18n="about.stat2num">Puerto</div>
+                        <div class="about-stat-label" data-i18n="about.stat2">Vistas al mar</div>
+                    </div>
+                    <div>
+                        <div class="about-stat-number" data-i18n="about.stat3num">Terraza</div>
+                        <div class="about-stat-label" data-i18n="about.stat3">Frente al mar</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-images fade-in">
+                <img src="img/local/terrace-marina.jpeg" alt="Terraza MARALMA">
+                <img src="img/local/interior-plants.jpeg" alt="Interior MARALMA">
+                <img src="img/local/terrace-glasses.jpeg" alt="Terraza con vistas">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CUISINE -->
+<section class="cuisine" id="cuisine">
+    <div class="container">
+        <div class="cuisine-header fade-in">
+            <p class="section-label" data-i18n="cuisine.label">Nuestra Cocina</p>
+            <h2 class="section-title" data-i18n="cuisine.title">Sabores del Mediterráneo</h2>
+            <p class="section-text" data-i18n="cuisine.text">Productos frescos de la lonja de Santa Pola, elaboraciones que respetan la esencia de cada ingrediente y una presentación que enamora a la vista.</p>
+        </div>
+        <div class="cuisine-grid fade-in">
+            <div class="cuisine-card">
+                <img src="img/food/octopus.webp" alt="Pulpo">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish1">Pulpo a la brasa</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/tuna-tataki.webp" alt="Tataki de atún">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish2">Tataki de atún</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/rice-prawn.jpeg" alt="Arroz">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish3">Arroz con carabinero</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/scallops.jpeg" alt="Zamburiñas">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish4">Zamburiñas al horno</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/burrata.webp" alt="Burrata">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish5">Burrata con pesto</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/cod-fish.webp" alt="Bacalao">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish6">Bacalao confitado</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/fideua.webp" alt="Fideuá">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish7">Fideuá marinera</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/steak.webp" alt="Carne">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish8">Entrecot a la parrilla</p>
+                </div>
+            </div>
+            <div class="cuisine-card">
+                <img src="img/food/tiramisu.webp" alt="Tiramisú">
+                <div class="cuisine-card-overlay">
+                    <p class="cuisine-card-name" data-i18n="cuisine.dish9">Tiramisú casero</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+    <div class="container">
+        <div class="gallery-header fade-in">
+            <p class="section-label" data-i18n="gallery.label">El Espacio</p>
+            <h2 class="section-title" data-i18n="gallery.title">Un rincón frente al mar</h2>
+        </div>
+        <div class="gallery-grid fade-in">
+            <div class="gallery-item">
+                <img src="img/local/terrace-dining.jpeg" alt="Terraza MARALMA">
+            </div>
+            <div class="gallery-item">
+                <img src="img/local/table-setting.jpeg" alt="Mesa con vistas">
+            </div>
+            <div class="gallery-item">
+                <img src="img/local/bar-sea-view.jpeg" alt="Bar con vistas">
+            </div>
+            <div class="gallery-item">
+                <img src="img/local/interior-burgundy.jpeg" alt="Interior">
+            </div>
+            <div class="gallery-item">
+                <img src="img/local/terrace-tables.jpeg" alt="Terraza mesas">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+    <div class="container">
+        <div class="events-header fade-in">
+            <p class="section-label" data-i18n="events.label">Eventos & Música</p>
+            <h2 class="section-title" data-i18n="events.title">Más que un restaurante</h2>
+            <p class="section-text" data-i18n="events.text">Disfruta de nuestras tardes musicales, eventos temáticos y celebraciones privadas con las mejores vistas al puerto de Santa Pola.</p>
+        </div>
+        <div class="events-grid fade-in">
+            <div class="event-card">
+                <img src="img/events/tardes-maralma.jpeg" alt="Las Tardes de Maralma">
+                <div class="event-card-body">
+                    <span class="event-card-tag" data-i18n="events.card1.tag">Cada Sábado</span>
+                    <h3 class="event-card-title" data-i18n="events.card1.title">Las Tardes de Maralma</h3>
+                    <p class="event-card-text" data-i18n="events.card1.text">Todos los sábados desde las 17h, disfruta de la mejor música con DJ GeNeeR mientras contemplas el atardecer sobre el puerto.</p>
+                </div>
+            </div>
+            <div class="event-card">
+                <img src="img/events/indie-party.jpeg" alt="Indie Party">
+                <div class="event-card-body">
+                    <span class="event-card-tag" data-i18n="events.card2.tag">Música en Vivo</span>
+                    <h3 class="event-card-title" data-i18n="events.card2.title">Indie Party</h3>
+                    <p class="event-card-text" data-i18n="events.card2.text">Sesiones de música indie y alternativa en un ambiente único junto al mar. Buena música, gastronomía y compañía.</p>
+                </div>
+            </div>
+            <div class="event-card">
+                <img src="img/events/flamenco-tech.jpeg" alt="Flamenco Tech">
+                <div class="event-card-body">
+                    <span class="event-card-tag" data-i18n="events.card3.tag">Fusión</span>
+                    <h3 class="event-card-title" data-i18n="events.card3.title">Flamenco Tech</h3>
+                    <p class="event-card-text" data-i18n="events.card3.text">La fusión perfecta entre el flamenco tradicional y los sonidos electrónicos. Una experiencia sensorial en el Club Náutico.</p>
+                </div>
+            </div>
+            <div class="event-card">
+                <img src="img/events/event-celebration.jpeg" alt="Celebraciones">
+                <div class="event-card-body">
+                    <span class="event-card-tag" data-i18n="events.card4.tag">Celebraciones</span>
+                    <h3 class="event-card-title" data-i18n="events.card4.title">Eventos Privados</h3>
+                    <p class="event-card-text" data-i18n="events.card4.text">Celebra tus momentos más especiales con nosotros. Bodas, bautizos, comuniones y eventos corporativos con vistas al mar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATERING -->
+<section class="catering" id="catering">
+    <div class="container">
+        <div class="catering-grid">
+            <div class="catering-images fade-in">
+                <img src="img/local/event-marina.jpeg" alt="Evento con vistas al puerto">
+                <img src="img/local/event-balloons.jpeg" alt="Celebración">
+                <img src="img/food/croquettes.webp" alt="Catering MARALMA">
+            </div>
+            <div class="fade-in">
+                <p class="section-label" data-i18n="catering.label">Catering</p>
+                <h2 class="section-title" data-i18n="catering.title">Llevamos MARALMA a tu evento</h2>
+                <p class="section-text" data-i18n="catering.text">Nuestro servicio de catering ofrece la misma excelencia gastronómica de nuestro restaurante en el lugar que elijas. Menús personalizados para cada ocasión, con la calidad y el mimo que nos caracteriza.</p>
+                <a href="mailto:maralmacatering@gmail.com" class="hero-cta" style="margin-top: 2rem; display: inline-block; border-color: var(--emerald); color: var(--emerald-dark);" data-i18n="catering.cta">Solicitar Presupuesto</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+    <div class="container">
+        <div class="reviews-header fade-in">
+            <div class="reviews-rating">
+                <span class="reviews-score">4.7</span>
+                <div class="reviews-stars">
+                    <div class="reviews-stars-row">
+                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="star" style="color: #ddd;" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <span class="reviews-source">TripAdvisor</span>
+                </div>
+            </div>
+            <p class="section-label" style="text-align:center;" data-i18n="reviews.label">Opiniones</p>
+            <h2 class="section-title" style="text-align:center;" data-i18n="reviews.title">Lo que dicen nuestros clientes</h2>
+        </div>
+        <div class="reviews-grid fade-in">
+            <div class="review-card">
+                <div class="review-card-stars">
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="review-card-text" data-i18n="reviews.review1.text">"Increíble experiencia. La comida es espectacular, el ambiente es precioso y las vistas al puerto son una maravilla. Sin duda volveremos."</p>
+                <p class="review-card-author">Fredrik O.</p>
+            </div>
+            <div class="review-card">
+                <div class="review-card-stars">
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="review-card-text" data-i18n="reviews.review2.text">"El sitio perfecto para disfrutar de una buena comida con vistas. El arroz estaba de escándalo y el servicio muy atento. Un 10."</p>
+                <p class="review-card-author">Pioneer37</p>
+            </div>
+            <div class="review-card">
+                <div class="review-card-stars">
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="star" style="color: #ddd;" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="review-card-text" data-i18n="reviews.review3.text">"Buena comida y muy buen ambiente. La terraza con vistas al puerto es ideal para una cena tranquila. Recomendable."</p>
+                <p class="review-card-author">Javier G.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="fade-in">
+                <p class="section-label" data-i18n="contact.label">Encuéntranos</p>
+                <h2 class="section-title" data-i18n="contact.title">Ven a visitarnos</h2>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <div>
+                            <p class="contact-item-label" data-i18n="contact.address.label">Dirección</p>
+                            <p class="contact-item-value">Av. Valencia 50, Club Náutico<br>03130 Santa Pola, Alicante</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        <div>
+                            <p class="contact-item-label" data-i18n="contact.phone.label">Teléfono</p>
+                            <p class="contact-item-value"><a href="tel:+34633910795">633 910 795</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <div>
+                            <p class="contact-item-label" data-i18n="contact.hours.label">Horario</p>
+                            <p class="contact-item-value" data-i18n="contact.hours.value">Dom - Lun, Mié - Sáb: 8:00 - 00:00<br>Martes: Cerrado</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <div>
+                            <p class="contact-item-label">Email</p>
+                            <p class="contact-item-value"><a href="mailto:maralmacatering@gmail.com">maralmacatering@gmail.com</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-social">
+                    <a href="https://www.instagram.com/maralmarestaurantesantapola/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61575aboraM" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                    </a>
+                    <a href="https://www.tripadvisor.es/Restaurant_Review-g947009-d33147486-Reviews-Maralma-Santa_Pola_Costa_Blanca_Province_of_Alicante_Valencian_Community.html" target="_blank" rel="noopener" aria-label="TripAdvisor">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="contact-map fade-in">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3134.5!2d-0.5667!3d38.1908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd63a9f8b5b5b5b5%3A0x0!2sClub+N%C3%A1utico+Santa+Pola!5e0!3m2!1ses!2ses!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p class="footer-brand">MARALMA</p>
+    <p class="footer-text" data-i18n="footer.text">Club Náutico Santa Pola &middot; <a href="https://webian.es" target="_blank">Webian</a></p>
+</footer>
+
+<script>
+const translations = {
+    es: {
+        'nav.about': 'Nosotros',
+        'nav.cuisine': 'Cocina',
+        'nav.gallery': 'Galería',
+        'nav.events': 'Eventos',
+        'nav.reviews': 'Opiniones',
+        'nav.contact': 'Contacto',
+        'hero.tagline': 'Club Náutico Santa Pola',
+        'hero.cta': 'Reservar Mesa',
+        'about.label': 'Nuestro Restaurante',
+        'about.title': 'Donde el Mediterráneo se vive en cada plato',
+        'about.text': 'Ubicado en el corazón del Club Náutico de Santa Pola, MARALMA ofrece una experiencia gastronómica única con vistas al puerto deportivo. Nuestra cocina fusiona la tradición mediterránea con toques contemporáneos, utilizando los mejores productos de la costa alicantina.',
+        'about.stat1': 'TripAdvisor',
+        'about.stat2num': 'Puerto',
+        'about.stat2': 'Vistas al mar',
+        'about.stat3num': 'Terraza',
+        'about.stat3': 'Frente al mar',
+        'cuisine.label': 'Nuestra Cocina',
+        'cuisine.title': 'Sabores del Mediterráneo',
+        'cuisine.text': 'Productos frescos de la lonja de Santa Pola, elaboraciones que respetan la esencia de cada ingrediente y una presentación que enamora a la vista.',
+        'cuisine.dish1': 'Pulpo a la brasa',
+        'cuisine.dish2': 'Tataki de atún',
+        'cuisine.dish3': 'Arroz con carabinero',
+        'cuisine.dish4': 'Zamburiñas al horno',
+        'cuisine.dish5': 'Burrata con pesto',
+        'cuisine.dish6': 'Bacalao confitado',
+        'cuisine.dish7': 'Fideuá marinera',
+        'cuisine.dish8': 'Entrecot a la parrilla',
+        'cuisine.dish9': 'Tiramisú casero',
+        'gallery.label': 'El Espacio',
+        'gallery.title': 'Un rincón frente al mar',
+        'events.label': 'Eventos & Música',
+        'events.title': 'Más que un restaurante',
+        'events.text': 'Disfruta de nuestras tardes musicales, eventos temáticos y celebraciones privadas con las mejores vistas al puerto de Santa Pola.',
+        'events.card1.tag': 'Cada Sábado',
+        'events.card1.title': 'Las Tardes de Maralma',
+        'events.card1.text': 'Todos los sábados desde las 17h, disfruta de la mejor música con DJ GeNeeR mientras contemplas el atardecer sobre el puerto.',
+        'events.card2.tag': 'Música en Vivo',
+        'events.card2.title': 'Indie Party',
+        'events.card2.text': 'Sesiones de música indie y alternativa en un ambiente único junto al mar. Buena música, gastronomía y compañía.',
+        'events.card3.tag': 'Fusión',
+        'events.card3.title': 'Flamenco Tech',
+        'events.card3.text': 'La fusión perfecta entre el flamenco tradicional y los sonidos electrónicos. Una experiencia sensorial en el Club Náutico.',
+        'events.card4.tag': 'Celebraciones',
+        'events.card4.title': 'Eventos Privados',
+        'events.card4.text': 'Celebra tus momentos más especiales con nosotros. Bodas, bautizos, comuniones y eventos corporativos con vistas al mar.',
+        'catering.label': 'Catering',
+        'catering.title': 'Llevamos MARALMA a tu evento',
+        'catering.text': 'Nuestro servicio de catering ofrece la misma excelencia gastronómica de nuestro restaurante en el lugar que elijas. Menús personalizados para cada ocasión, con la calidad y el mimo que nos caracteriza.',
+        'catering.cta': 'Solicitar Presupuesto',
+        'reviews.label': 'Opiniones',
+        'reviews.title': 'Lo que dicen nuestros clientes',
+        'reviews.review1.text': '"Increíble experiencia. La comida es espectacular, el ambiente es precioso y las vistas al puerto son una maravilla. Sin duda volveremos."',
+        'reviews.review2.text': '"El sitio perfecto para disfrutar de una buena comida con vistas. El arroz estaba de escándalo y el servicio muy atento. Un 10."',
+        'reviews.review3.text': '"Buena comida y muy buen ambiente. La terraza con vistas al puerto es ideal para una cena tranquila. Recomendable."',
+        'contact.label': 'Encuéntranos',
+        'contact.title': 'Ven a visitarnos',
+        'contact.address.label': 'Dirección',
+        'contact.phone.label': 'Teléfono',
+        'contact.hours.label': 'Horario',
+        'contact.hours.value': 'Dom - Lun, Mié - Sáb: 8:00 - 00:00<br>Martes: Cerrado',
+        'footer.text': 'Club Náutico Santa Pola &middot; <a href="https://webian.es" target="_blank">Webian</a>',
+        'meta.title': 'MARALMA — Restaurante en Club Náutico Santa Pola',
+        'meta.description': 'Restaurante MARALMA en el Club Náutico de Santa Pola. Cocina mediterránea con vistas al puerto deportivo. Eventos, música en vivo y catering.'
+    },
+    en: {
+        'nav.about': 'About',
+        'nav.cuisine': 'Cuisine',
+        'nav.gallery': 'Gallery',
+        'nav.events': 'Events',
+        'nav.reviews': 'Reviews',
+        'nav.contact': 'Contact',
+        'hero.tagline': 'Club Náutico Santa Pola',
+        'hero.cta': 'Book a Table',
+        'about.label': 'Our Restaurant',
+        'about.title': 'Where the Mediterranean comes alive in every dish',
+        'about.text': 'Located in the heart of Club Náutico de Santa Pola, MARALMA offers a unique dining experience with views over the marina. Our cuisine blends Mediterranean tradition with contemporary touches, using the finest products from the Alicante coast.',
+        'about.stat1': 'TripAdvisor',
+        'about.stat2num': 'Marina',
+        'about.stat2': 'Sea views',
+        'about.stat3num': 'Terrace',
+        'about.stat3': 'Waterfront',
+        'cuisine.label': 'Our Cuisine',
+        'cuisine.title': 'Flavours of the Mediterranean',
+        'cuisine.text': 'Fresh produce from the Santa Pola fish market, preparations that honour the essence of each ingredient, and a presentation that delights the eye.',
+        'cuisine.dish1': 'Grilled octopus',
+        'cuisine.dish2': 'Tuna tataki',
+        'cuisine.dish3': 'Rice with red prawn',
+        'cuisine.dish4': 'Baked scallops',
+        'cuisine.dish5': 'Burrata with pesto',
+        'cuisine.dish6': 'Confit cod',
+        'cuisine.dish7': 'Seafood fideuá',
+        'cuisine.dish8': 'Grilled rib-eye',
+        'cuisine.dish9': 'Homemade tiramisu',
+        'gallery.label': 'The Space',
+        'gallery.title': 'A corner by the sea',
+        'events.label': 'Events & Music',
+        'events.title': 'More than a restaurant',
+        'events.text': 'Enjoy our musical evenings, themed events and private celebrations with the best views of Santa Pola harbour.',
+        'events.card1.tag': 'Every Saturday',
+        'events.card1.title': 'Maralma Afternoons',
+        'events.card1.text': 'Every Saturday from 5pm, enjoy the best music with DJ GeNeeR while watching the sunset over the harbour.',
+        'events.card2.tag': 'Live Music',
+        'events.card2.title': 'Indie Party',
+        'events.card2.text': 'Indie and alternative music sessions in a unique seaside setting. Great music, gastronomy and company.',
+        'events.card3.tag': 'Fusion',
+        'events.card3.title': 'Flamenco Tech',
+        'events.card3.text': 'The perfect fusion of traditional flamenco and electronic sounds. A sensory experience at Club Náutico.',
+        'events.card4.tag': 'Celebrations',
+        'events.card4.title': 'Private Events',
+        'events.card4.text': 'Celebrate your most special moments with us. Weddings, christenings, communions and corporate events with sea views.',
+        'catering.label': 'Catering',
+        'catering.title': 'We bring MARALMA to your event',
+        'catering.text': 'Our catering service delivers the same gastronomic excellence of our restaurant to the venue of your choice. Custom menus for every occasion, with the quality and care that defines us.',
+        'catering.cta': 'Request a Quote',
+        'reviews.label': 'Reviews',
+        'reviews.title': 'What our guests say',
+        'reviews.review1.text': '"Incredible experience. The food is spectacular, the atmosphere is beautiful and the harbour views are wonderful. We will definitely come back."',
+        'reviews.review2.text': '"The perfect place to enjoy great food with views. The rice was outstanding and the service very attentive. A 10 out of 10."',
+        'reviews.review3.text': '"Great food and a wonderful atmosphere. The terrace overlooking the harbour is ideal for a relaxed dinner. Highly recommended."',
+        'contact.label': 'Find Us',
+        'contact.title': 'Come visit us',
+        'contact.address.label': 'Address',
+        'contact.phone.label': 'Phone',
+        'contact.hours.label': 'Hours',
+        'contact.hours.value': 'Sun - Mon, Wed - Sat: 8:00 AM - 12:00 AM<br>Tuesday: Closed',
+        'footer.text': 'Club Náutico Santa Pola &middot; <a href="https://webian.es" target="_blank">Webian</a>',
+        'meta.title': 'MARALMA — Restaurant at Club Náutico Santa Pola',
+        'meta.description': 'MARALMA restaurant at Club Náutico de Santa Pola. Mediterranean cuisine with marina views. Events, live music and catering.'
+    }
+};
+
+let currentLang = localStorage.getItem('maralma-lang') || (navigator.language.startsWith('en') ? 'en' : 'es');
+
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('maralma-lang', lang);
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+        }
+    });
+
+    document.title = translations[lang]['meta.title'];
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', translations[lang]['meta.description']);
+
+    document.querySelectorAll('.lang-btn, .lang-btn-m').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+}
+
+document.querySelectorAll('.lang-btn, .lang-btn-m').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+setLang(currentLang);
+
+// NAV SCROLL
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+
+hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// FADE-IN ANIMATIONS
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+</script>
+
+</body>
+</html>
